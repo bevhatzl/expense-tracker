@@ -8,6 +8,7 @@ function AllExpenses() {
     <ExpensesOutput
       expenses={expensesContext.expenses}
       expensesPeriod="Total"
+      fallbackText="No expenses found!"
     />
   );
 }
