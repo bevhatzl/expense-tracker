@@ -1,8 +1,23 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Input from './Input';
+import { useState } from 'react';
 
 function ExpenseForm() {
-  function amountChangedHandler() {}
+  const [inputValues, setInputValues] = useState({
+    amount: '',
+    date: '',
+    description: '',
+  });
+
+  // By default, react native provides the enteredValue here
+  function inputChangedHandler(inputIdentifier, enteredValue) {
+    setInputValues((curInputValues) => {
+      return {
+        ...curInputValues,
+        [inputIdentifier]: enteredValue, // Because the property name is a string here so i use square brackets
+      };
+    });
+  }
 
   return (
     <View style={styles.form}>
@@ -12,7 +27,8 @@ function ExpenseForm() {
           label="Amount"
           textInputConfig={{
             keyboardType: 'decimal-pad',
-            onChangeText: amountChangedHandler,
+            onChangeText: inputChangedHandler.bind(this, 'amount'), // Using bind in order to pass in a paramater i specify which is 'amount'. Because react automatically passes in the input value string.
+            value: inputValues.amount,
           }}
           style={styles.rowInput}
         />
@@ -21,7 +37,8 @@ function ExpenseForm() {
           textInputConfig={{
             placeholder: 'YYYY-MM-DD',
             maxLength: 10,
-            onChangeText: () => {},
+            onChangeText: inputChangedHandler.bind(this, 'date'),
+            value: inputValues.date,
           }}
           style={styles.rowInput}
         />
@@ -32,6 +49,8 @@ function ExpenseForm() {
           multiLine: true,
           // autoCorrect: false,
           // autoCapitalize: "none",
+          onChangeText: inputChangedHandler.bind(this, 'description'),
+          value: inputValues.description,
         }}
       />
     </View>
