@@ -11,7 +11,7 @@ function Input({ label, style, textInputConfig }) {
   return (
     <View style={[styles.inputContainer, style]}>
       <Text style={styles.label}>{label}</Text>
-      <TextInput style={inputStyles} {...textInputConfig} />
+      <TextInput style={inputStyles} {...textInputConfig} multiline={true} />
     </View>
   );
 }
